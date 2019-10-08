@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+
+	<!-- 회원정보 입력 할 때 새로 생기는 페이지-->
+	<insert id="insert" parameterType="blogvo">
+		<![CDATA[
+		insert
+		  into blog
+		values ( #{id }, "기본 블로그", "spring-logo.jpg")
+		]]>
+	</insert>
+
+
+</mapper>
