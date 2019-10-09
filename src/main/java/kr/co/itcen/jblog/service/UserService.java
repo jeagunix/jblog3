@@ -22,5 +22,9 @@ public class UserService {
 		return userDao.getId(id) != null;
 	}
 
+	public UserVo getUserImfo(UserVo vo) {
+		return userDao.getUserImfo(vo);
+	}
+
 	
 }

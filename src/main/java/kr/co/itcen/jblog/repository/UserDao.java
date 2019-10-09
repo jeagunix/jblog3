@@ -23,6 +23,11 @@ public class UserDao {
 		return result;
 	}
 
+	public UserVo getUserImfo(UserVo vo) {
+		UserVo result = sqlSession.selectOne("user.getUserImfo", vo);
+		return result;
+	}
+
 
 
 }

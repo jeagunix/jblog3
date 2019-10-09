@@ -13,13 +13,22 @@
 		values ( #{id }, #{name }, #{password }, "USER", now())
 		]]>
 	</insert>
-
+	<!-- 아이디 중복체크 -->
 	<select id="getById" parameterType="string"
 		resultType="uservo">
 		<![CDATA[
 		select id
 		  from user
 		 where id = #{id }		
+		]]>
+	</select>
+	<!-- 로그인 아이디 있는지 여부 -->
+	<select id="getUserImfo" parameterType="uservo"
+		resultType="uservo">
+		<![CDATA[
+		select id
+		  from user
+		 where id = #{id } and password = #{password }	
 		]]>
 	</select>
 

@@ -50,27 +50,29 @@
 	<mvc:default-servlet-handler />
 
 	<!-- Interceptor -->
-	
-<!-- 
 	<mvc:interceptors>
 
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth" />
 			<bean class="kr.co.itcen.jblog.security.LoginInterceptor" />
 		</mvc:interceptor>
+
 		<mvc:interceptor>
 			<mvc:mapping path="/user/logout" />
 			<bean class="kr.co.itcen.jblog.security.LogoutInterceptor" />
 		</mvc:interceptor>
+<!--
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/user/auth" />
+ 
 			<mvc:exclude-mapping path="/user/logout" />
 			<mvc:exclude-mapping path="/assets/**" />
+
 			<bean class="kr.co.itcen.jblog.security.AuthInterceptor" />
 		</mvc:interceptor>
+-->
 	</mvc:interceptors>
- -->
 
 	<!-- View Resolver -->
 	<bean id="viewResolver"
