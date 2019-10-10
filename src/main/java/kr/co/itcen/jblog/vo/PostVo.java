@@ -3,13 +3,13 @@ package kr.co.itcen.jblog.vo;
 public class PostVo {
 	private Long no;
 	private String title;
-	private String text;
+	private String content;
 	private String writeDate;
 	private Long categoryNo;
 	@Override
 	public String toString() {
-		return "PostVo [no=" + no + ", title=" + title + ", text=" + text + ", writeDate=" + writeDate + ", categoryNo="
-				+ categoryNo + "]";
+		return "PostVo [no=" + no + ", title=" + title + ", content=" + content + ", writeDate=" + writeDate
+				+ ", categoryNo=" + categoryNo + "]";
 	}
 	public Long getNo() {
 		return no;
@@ -23,11 +23,11 @@ public class PostVo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getText() {
-		return text;
+	public String getContent() {
+		return content;
 	}
-	public void setText(String text) {
-		this.text = text;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public String getWriteDate() {
 		return writeDate;
@@ -41,4 +41,5 @@ public class PostVo {
 	public void setCategoryNo(Long categoryNo) {
 		this.categoryNo = categoryNo;
 	}
+
 }

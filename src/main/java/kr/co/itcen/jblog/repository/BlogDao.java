@@ -1,8 +1,12 @@
 package kr.co.itcen.jblog.repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import kr.co.itcen.jblog.vo.UserVo;
 
 @Repository
@@ -14,6 +18,25 @@ public class BlogDao {
 	public void insert(UserVo vo) {
 		sqlSession.insert("blog.insert", vo);
 
+	}
+
+	public Map<String, Object> getAll(String id, long categoryNo, long postNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(id);
+		System.out.println(categoryNo);
+		System.out.println(postNo);
+		map.put("blogInfo", sqlSession.selectOne("blog.blogInfo", id));
+		map.put("categoryList", sqlSession.selectList("blog.categoryList", id));
+		
+		Map<String, Object> buff = new HashMap<String, Object>();
+		buff.put("blogId", id);
+		buff.put("categoryNo", categoryNo);
+		buff.put("postNo", postNo);
+		
+		map.put("postList", sqlSession.selectList("blog.postList", buff));
+		map.put("postInfo", sqlSession.selectOne("blog.postInfo", buff));
+		
+		return map;
 	}
 
 }

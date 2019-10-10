@@ -3,7 +3,7 @@
 
 <mapper namespace="blog">
 
-	<!-- 회원정보 입력 할 때 새로 생기는 페이지-->
+	<!-- 회원정보 입력 할 때 새로 생기는 페이지 -->
 	<insert id="insert" parameterType="blogvo">
 		<![CDATA[
 		insert
@@ -12,5 +12,85 @@
 		]]>
 	</insert>
 
+	<!-- blog 정보를 가져오는 select -->
+	<select id="blogInfo" parameterType="String" resultType="blogvo">
+		<![CDATA[
+			select blog_id as blogId, title, logo
+			  from blog
+			 where blog_id = #{value }
+		]]>
+	</select>
 
+	<!-- 카테고리 리스트를 가져오는 select -->
+	<select id="categoryList" parameterType="String"
+		resultType="categoryvo">
+		<![CDATA[
+			select no, name, description, reg_date as regDate, blog_id as blogId
+			  from category
+			 where blog_id = #{value }
+		]]>
+	</select>
+
+	<!-- 포스트 리스트를 가져오는 select -->
+	<select id="postList" parameterType="map" resultType="postvo">
+		<![CDATA[
+			select b.no, b.title, b.write_date as writeDate, b.category_no as categoryNo
+			from category a, post b
+		]]>
+		<choose>
+			<when test="categoryNo == 0">
+			<![CDATA[
+				    where b.category_no = a.no 
+					  and a.blog_id = #{blogId }
+					  and a.no = 1
+				 order by b.write_date desc 
+				    limit 5
+			]]>
+			</when>
+			<otherwise>
+		    <![CDATA[
+				    where b.category_no = a.no 
+					  and a.blog_id = #{blogId }
+					  and b.category_no = ${categoryNo } 
+				 order by b.write_date desc 
+				    limit 5  
+		    ]]>
+			</otherwise>
+		</choose>
+	</select>
+
+	<!-- 포스트 정보를 가져오기 위한 select -->
+	<select id="postInfo" parameterType="map" resultType="postvo">
+		<![CDATA[
+			select b.no, b.title, b.content
+			from category a, post b
+		]]>
+		<choose>
+			<when test="categoryNo == 0 and postNo ==0">
+			<![CDATA[
+				    where b.category_no = a.no 
+					  and a.blog_id = #{blogId }
+				 order by b.write_date desc 
+				    limit 1
+			]]>
+			</when>
+			<when test="postNo == 0">
+			<![CDATA[
+				    where b.category_no = a.no 
+					  and a.blog_id = #{blogId }
+					  and a.no = ${categoryNo}
+				 order by b.write_date desc
+				    limit 1
+			]]>
+			</when>
+			<otherwise>
+		    <![CDATA[
+				    where b.category_no = a.no 
+					  and a.blog_id = #{blogId }
+					  and b.category_no = ${categoryNo }   
+					  and b.no = ${postNo }
+				]]>
+			</otherwise>
+		</choose>
+	</select>
 </mapper>
