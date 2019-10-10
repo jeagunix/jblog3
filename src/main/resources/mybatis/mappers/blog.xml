@@ -93,4 +93,24 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<!-- blog-admin-basic으로 갈 때 기본 정보를 위한 select -->
+	<select id="getTitleLogo" parameterType="String"
+		resultType="blogvo">
+		<![CDATA[
+			select blog_id as blogId, title, logo
+			  from blog
+			 where blog_id = #{value }
+		]]>
+	</select>
+	
+	<!-- blog-admin-basic의 기본 정보를 update -->
+	<update id="updateBasiceImfo" parameterType="blogvo">
+		<![CDATA[
+			update blog
+			   set title = #{title }, logo = #{logo }
+			 where blog_id= #{blogId }
+		]]>
+	</update> 
+	
 </mapper>
