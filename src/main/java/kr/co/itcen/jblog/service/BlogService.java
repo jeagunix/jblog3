@@ -1,11 +1,14 @@
 package kr.co.itcen.jblog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import kr.co.itcen.jblog.repository.BlogDao;
 import kr.co.itcen.jblog.vo.BlogVo;
+import kr.co.itcen.jblog.vo.CategoryVo;
 import kr.co.itcen.jblog.vo.UserVo;
 
 @Service
@@ -32,6 +35,11 @@ public class BlogService {
 	public void updateBasiceImfo(BlogVo blogVo) {
 		blogDao.updateBasiceImfo(blogVo);
 		
+	}
+
+	public List<CategoryVo> getCategoryName(String id) {
+		
+		return blogDao.getCategoryName(id);
 	}
 }
 

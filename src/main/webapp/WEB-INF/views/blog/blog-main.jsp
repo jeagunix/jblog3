@@ -50,7 +50,7 @@
 		<div id="extra">
 			<div class="blog-logo">
 				<img
-					src="${pageContext.request.contextPath }/assets/images/${blogInfo.logo }">
+					src="${pageContext.servletContext.contextPath }/assets/logo/${blogInfo.logo }">
 			</div>
 		</div>
 
@@ -64,11 +64,7 @@
 			</ul>
 		</div>
 
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/includes/blog-footer.jsp" />
 	</div>
 </body>
 </html>

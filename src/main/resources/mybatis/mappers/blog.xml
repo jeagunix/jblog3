@@ -113,4 +113,15 @@
 		]]>
 	</update> 
 	
+	<!-- categoryList Name을 가져오기 위한 select -->
+	<select id="getCategoryName" parameterType="String"
+		resultType="categoryvo">
+		<![CDATA[
+			select no, name
+			  from category a, blog b
+			 where b.id = a.blog_id
+			   and b.id = #{value }
+		]]>
+	</select>
+	
 </mapper>
