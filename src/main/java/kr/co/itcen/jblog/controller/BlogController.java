@@ -29,11 +29,11 @@ public class BlogController {
 
 	@Autowired
 	private FileuploadService fileuploadService;
-	
+
 	@RequestMapping({ "", "/{pathNo1}", "/{pathNo1}/{pathNo2}" })
 	public String index(@PathVariable String id, @PathVariable Optional<Long> pathNo1,
 			@PathVariable Optional<Long> pathNo2, ModelMap modelMap) {
-		
+
 		Long categoryNo = 0L;
 		Long postNo = 0L;
 
@@ -42,51 +42,61 @@ public class BlogController {
 			categoryNo = pathNo1.get();
 		} else if (pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
-		} 
-		
+		}
+
 		modelMap.putAll(blogService.getAll(id, categoryNo, postNo));
 		return "blog/blog-main";
 	}
-	@RequestMapping(value="/admin/basic", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/admin/basic", method = RequestMethod.GET)
 	public String adminBasic(@PathVariable String id, Model model) {
+		/* blog의 title을 변동을 위해 추가*/
 		BlogVo blogInfo = blogService.getTitleLogo(id);
-		
 		model.addAttribute("blogInfo", blogInfo);
-		
+
 		return "blog/blog-admin-basic";
 	}
-	
-	@RequestMapping(value="/admin/basic", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin/basic", method = RequestMethod.POST)
 	public String adminBasic(@PathVariable String id, @ModelAttribute BlogVo blogVo,
-			 @RequestParam(value="logoFile", required=false)MultipartFile multipartFile) {
-		
+			@RequestParam(value = "logoFile", required = false) MultipartFile multipartFile) {
+
 		String url = fileuploadService.restore(multipartFile);
 		blogVo.setBlogId(id);
 		blogVo.setLogo(url);
 		blogService.updateBasiceImfo(blogVo);
-		
-		return "redirect:/"+id;
+
+		return "redirect:/" + id;
 	}
-	
+
 	@RequestMapping("/admin/category")
 	public String adminCategory(@PathVariable String id, Model model) {
+		/* blog의 title을 변동을 위해 추가*/
+		BlogVo blogInfo = blogService.getTitleLogo(id);
+		model.addAttribute("blogInfo", blogInfo);
+		
 		
 		return "blog/blog-admin-category";
 	}
+
 	@RequestMapping("/admin/write")
 	public String adminWrite(@PathVariable String id, Model model) {
+		/* blog의 title을 변동을 위해 추가*/
+		BlogVo blogInfo = blogService.getTitleLogo(id);
+		model.addAttribute("blogInfo", blogInfo);
+		
 		List<CategoryVo> categoryList = blogService.getCategoryName(id);
 		model.addAttribute("categoryList", categoryList);
 		return "blog/blog-admin-write";
 	}
-	
-	@RequestMapping(value="/admin/write", method= RequestMethod.POST)
+
+	@RequestMapping(value = "/admin/write", method = RequestMethod.POST)
 	public String adminWrite(@PathVariable String id, @ModelAttribute PostVo postVo) {
-		
-		return "redirect:/"+id;
+		blogService.insertPost(postVo);
+
+		return "redirect:/" + id;
 	}
-	
-	
+
 //	@ResponseBody
 //	@RequestMapping("/admin/basic")
 //	public String adminBasic(@PathVariable String id) {

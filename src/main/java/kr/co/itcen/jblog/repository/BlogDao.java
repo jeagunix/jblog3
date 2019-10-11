@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.CategoryVo;
+import kr.co.itcen.jblog.vo.PostVo;
 import kr.co.itcen.jblog.vo.UserVo;
 
 @Repository
@@ -53,6 +54,11 @@ public class BlogDao {
 	public List<CategoryVo> getCategoryName(String id) {
 		List<CategoryVo> result = sqlSession.selectList("getCategoryName", id);
 		return result;
+	}
+
+	public void insertPost(PostVo postVo) {
+		sqlSession.insert("insertPost", postVo);
+		
 	}
 
 }

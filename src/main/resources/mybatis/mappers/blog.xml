@@ -93,7 +93,7 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<!-- blog-admin-basic으로 갈 때 기본 정보를 위한 select -->
 	<select id="getTitleLogo" parameterType="String"
 		resultType="blogvo">
@@ -103,7 +103,7 @@
 			 where blog_id = #{value }
 		]]>
 	</select>
-	
+
 	<!-- blog-admin-basic의 기본 정보를 update -->
 	<update id="updateBasiceImfo" parameterType="blogvo">
 		<![CDATA[
@@ -111,17 +111,31 @@
 			   set title = #{title }, logo = #{logo }
 			 where blog_id= #{blogId }
 		]]>
-	</update> 
-	
+	</update>
+
 	<!-- categoryList Name을 가져오기 위한 select -->
 	<select id="getCategoryName" parameterType="String"
 		resultType="categoryvo">
 		<![CDATA[
 			select no, name
 			  from category a, blog b
-			 where b.id = a.blog_id
-			   and b.id = #{value }
+			 where b.blog_id = a.blog_id
+			   and b.blog_id = #{value }
 		]]>
+
 	</select>
-	
+
+	<!-- post를 추가하기 위한 insert -->
+	<insert id="insertPost" parameterType="postvo">
+		<![CDATA[
+			insert 
+			  into post
+			values (null, #{categoryNo }, #{title }, #{content }, now())
+		]]>
+		<selectKey keyProperty="no" resultType="Long">
+			<![CDATA[
+				select last_insert_id()
+			]]>
+		</selectKey>
+	</insert>
 </mapper>

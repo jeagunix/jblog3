@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import kr.co.itcen.jblog.repository.BlogDao;
 import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.CategoryVo;
+import kr.co.itcen.jblog.vo.PostVo;
 import kr.co.itcen.jblog.vo.UserVo;
 
 @Service
@@ -40,6 +41,11 @@ public class BlogService {
 	public List<CategoryVo> getCategoryName(String id) {
 		
 		return blogDao.getCategoryName(id);
+	}
+
+	public void insertPost(PostVo postVo) {
+		blogDao.insertPost(postVo);
+		
 	}
 }
 

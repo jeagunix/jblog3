@@ -19,7 +19,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>${blogInfo.title }</h1>
+			<c:import url="/WEB-INF/views/includes/blog-title.jsp" />
 			<c:import url="/WEB-INF/views/includes/blog-menu.jsp" />
 		</div>
 		<div id="wrapper">

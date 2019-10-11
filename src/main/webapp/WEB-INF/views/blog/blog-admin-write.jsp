@@ -16,7 +16,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>Spring 이야기</h1>
+			<c:import url="/WEB-INF/views/includes/blog-title.jsp" />
 			<c:import url="/WEB-INF/views/includes/blog-menu.jsp" />
 		</div>
 		<div id="wrapper">
@@ -33,9 +33,9 @@
 						<tr>
 							<td class="t">제목</td>
 							<td><input type="text" size="60" name="title"> 
-							<select name="category">
-									<c:forEach var="category" items="${categoryList }">
-											<option value="${category.no }">${category.name }</option>
+							<select name="categoryNo">
+									<c:forEach var="categoryList" items="${categoryList }">
+											<option value="${categoryList.no }">${categoryList.name }</option>
 									</c:forEach>
 							</select>
 							</td>

@@ -16,10 +16,10 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>Spring 이야기</h1>
+			<c:import url="/WEB-INF/views/includes/blog-title.jsp" />
 			<c:import url="/WEB-INF/views/includes/blog-menu.jsp" />
 		</div>
-		<div id="wrapper">
+		<div id="wrapper">z
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
 					<li><a
