@@ -18,30 +18,80 @@
 
 <script>
 $(function(){
+	
+	
 	$("#addCategory").click(function(){
 		var input_name = $("#name").val();
-		var input_text = $("#text").val();
-		alert(input_name);
+		var input_description = $("#description").val();
 		
-		if(input_name == null || input_text ==null){
+		if(input_name == null || input_description ==null){
 			return null;
 		}
-		var allData = { name: input_name, text: input_text };
+		var allData = { name: input_name, description: input_description };
 		// ajax 통신
 		$.ajax({
-			url: "${pageContext.servletContext.contextPath }/${authUser.id}/admin/category",
+			url: "${pageContext.servletContext.contextPath }/${authUser.id}/admin/categoryInsert",
 			type: "post",
 			data: allData,
-			success: function(result){
+			success: function(categoryInfoList){
+				
 				$("#name").val("");
-				$("#text").val("");
+				$("#description").val("");
 				$("#name").focus();
+				
+				$("#original_table").remove();
+				$("#ajax_able").remove();
+				
+				var countList = categoryInfoList.length;
+				var ajax_table = $("<tbody id='ajax_table'></tbody>");
+				$(".admin-cat").append(ajax_table);
+				
+				for(let categoryInfo in categoryInfoList){
+					ajax_table.append(
+							"<tr>" +
+						        "<td>" + countList + "</td>" +
+						        "<td>" + categoryInfoList[categoryInfo].name + "</td>" +
+						        "<td>" + categoryInfoList[categoryInfo].postCount + "</td>"+
+						        "<td>" + categoryInfoList[categoryInfo].description + "</td>" +
+						        "<td>" +
+						        "<img src='${pageContext.servletContext.contextPath}/assets/images/delete.jpg' />" +
+					       	    "</td>" +
+					        "</tr>"		
+					);
+					countList--;
+				}
+				alert(input_name+"이 카테고리로 추가되었습니다.");
+		
 			
+				
+				
 			},
 			error: function(xhr, error){
-				
+				console.log(err);
+				alert("오류입니다.");
 			}
 		});
+	});
+	
+	$("td img").click(function(){
+		var categoryNo = $(this).attr('id');
+		
+		
+		// ajax 통신
+		$.ajax({
+			url: "${pageContext.servletContext.contextPath }/${authUser.id}/admin/categoryDelete",
+			type: "post",
+			data: {"categoryNo": categoryNo },
+			success: function(categoryInfoList){
+				alert("1");
+				alert(categoryNo);
+			},
+			error: function(xhr, error){
+				console.log(err);
+				alert("오류입니다.");
+			}
+		});
+		
 	});
 });
 </script>
@@ -71,11 +121,11 @@ $(function(){
 							<th>삭제</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="original_table">
 						<c:forEach var="categoryInfo" items="${categoryInfoList }" varStatus="status">
 							<tr>
 								<td>
-									${fn:length(categoryList) - status.count }
+									${(fn:length(categoryInfoList) - status.count)+1 }
 								</td>
 								<td>
 									${categoryInfo.name }
@@ -102,7 +152,7 @@ $(function(){
 					</tr>
 					<tr>
 						<td class="t">설명</td>
-						<td><input type="text" id="text" name="text"></td>
+						<td><input type="text" id="description" name="description"></td>
 					</tr>
 					<tr>
 						<td class="s">&nbsp;</td>

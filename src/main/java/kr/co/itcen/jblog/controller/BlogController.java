@@ -90,14 +90,22 @@ public class BlogController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
-	public String adminCategory(@PathVariable String id, CategoryVo categoryVo) {
+	@RequestMapping(value="/admin/categoryInsert", method=RequestMethod.POST)
+	public List<CategoryVo> adminCategoryInsert(@PathVariable String id, CategoryVo categoryVo) {
 
 		categoryVo.setBlogId(id);
 		categoryService.insertCategory(categoryVo);
 		
-		
-		return "blog/blog-admin-category";
+		List<CategoryVo> categoryInfoList = categoryService.getCategoryInfo(id);
+		return categoryInfoList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/admin/categoryDelete", method=RequestMethod.POST)
+	public List<CategoryVo> adminCategoryDelete(@PathVariable String id, CategoryVo categoryVo) {
+
+		List<CategoryVo> categoryInfoList = categoryService.getCategoryInfo(id);
+		return categoryInfoList;
 	}
 
 	@RequestMapping("/admin/write")

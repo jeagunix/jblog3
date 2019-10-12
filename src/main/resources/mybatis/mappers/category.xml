@@ -22,7 +22,7 @@
 		<![CDATA[
 		insert
 		  into category
-		values ( null, #{name }, #{text }, now(), 0, #{blogId })
+		values ( null, #{name }, #{description }, now(), 0, #{blogId })
 		]]>
 		<selectKey keyProperty="no" resultType="Long">
 			<![CDATA[
