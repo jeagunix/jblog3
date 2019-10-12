@@ -44,7 +44,7 @@
 					  and a.blog_id = #{blogId }
 					  and a.no = 1
 				 order by b.write_date desc 
-				    limit 5
+				   
 			]]>
 			</when>
 			<otherwise>
@@ -53,7 +53,7 @@
 					  and a.blog_id = #{blogId }
 					  and b.category_no = ${categoryNo } 
 				 order by b.write_date desc 
-				    limit 5  
+				   
 		    ]]>
 			</otherwise>
 		</choose>

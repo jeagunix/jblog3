@@ -5,14 +5,12 @@
 
 	<!-- 회원정보 입력 -->
 	<insert id="insert" parameterType="postvo">
-		<!-- 오라클 같은 경우에는 no값을 먼저 올린다. -->
-		<!-- mysql 같은 경우에는 no값을 나중에 올린다. -->
 		<![CDATA[
 		insert
 		  into user
 		values ( #{id }, #{name }, #{password }, "USER", now())
 		]]>
 	</insert>
-
+	
 
 </mapper>

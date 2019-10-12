@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.itcen.jblog.service.BlogService;
+import kr.co.itcen.jblog.service.CategoryService;
 import kr.co.itcen.jblog.service.FileuploadService;
+import kr.co.itcen.jblog.service.PostService;
 import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.CategoryVo;
 import kr.co.itcen.jblog.vo.PostVo;
@@ -26,6 +29,10 @@ public class BlogController {
 
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private PostService postService;
+	@Autowired
+	private CategoryService categoryService;
 
 	@Autowired
 	private FileuploadService fileuploadService;
@@ -70,10 +77,24 @@ public class BlogController {
 	}
 
 	@RequestMapping("/admin/category")
-	public String adminCategory(@PathVariable String id, Model model) {
+	public String adminCategory(@PathVariable String id, ModelMap model) {
 		/* blog의 title을 변동을 위해 추가*/
 		BlogVo blogInfo = blogService.getTitleLogo(id);
 		model.addAttribute("blogInfo", blogInfo);
+		
+		
+		List<CategoryVo> categoryInfoList = categoryService.getCategoryInfo(id);
+		model.addAttribute("categoryInfoList", categoryInfoList);
+		
+		return "blog/blog-admin-category";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
+	public String adminCategory(@PathVariable String id, CategoryVo categoryVo) {
+
+		categoryVo.setBlogId(id);
+		categoryService.insertCategory(categoryVo);
 		
 		
 		return "blog/blog-admin-category";
@@ -93,8 +114,9 @@ public class BlogController {
 	@RequestMapping(value = "/admin/write", method = RequestMethod.POST)
 	public String adminWrite(@PathVariable String id, @ModelAttribute PostVo postVo) {
 		blogService.insertPost(postVo);
+		categoryService.updatePostCount(postVo.getCategoryNo());
 
-		return "redirect:/" + id;
+		return "redirect:/" + id + "/1";
 	}
 
 //	@ResponseBody
