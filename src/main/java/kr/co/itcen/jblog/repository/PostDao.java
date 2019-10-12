@@ -12,5 +12,9 @@ public class PostDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	public void deletePostOfCategory(Long categoryNo) {
+		sqlSession.delete("deletePostOfCategory",categoryNo);
+	}
+
 	
 }

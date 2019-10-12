@@ -13,5 +13,10 @@ public class PostService {
 	@Autowired
 	private PostDao postDao;
 
+	public void deletePostOfCategory(Long categoryNo) {
+		postDao.deletePostOfCategory(categoryNo);
+		
+	}
+
 	
 }

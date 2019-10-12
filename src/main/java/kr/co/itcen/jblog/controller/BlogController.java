@@ -104,6 +104,10 @@ public class BlogController {
 	@RequestMapping(value="/admin/categoryDelete", method=RequestMethod.POST)
 	public List<CategoryVo> adminCategoryDelete(@PathVariable String id, CategoryVo categoryVo) {
 
+		categoryVo.setBlogId(id);
+		postService.deletePostOfCategory(categoryVo.getNo());
+		categoryService.deleteCategory(categoryVo);
+		
 		List<CategoryVo> categoryInfoList = categoryService.getCategoryInfo(id);
 		return categoryInfoList;
 	}

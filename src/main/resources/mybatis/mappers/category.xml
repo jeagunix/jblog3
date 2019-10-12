@@ -31,6 +31,14 @@
 		</selectKey>
 	</insert>
 	
+	<!-- 카테고리 삭제를 위한 delete -->
+	<delete id="deleteCategory" parameterType="categoryvo">
+		delete 
+		  from category
+		 where blog_id = #{blogId }
+		   and no = #{no }
+	</delete>
+	
 	<!-- categorylist를 뿌리기위한 select -->
 	<select id="getCategoryInfo" parameterType="String" resultType="categoryvo">
 		<![CDATA[

@@ -35,4 +35,9 @@ public class CategoryDao {
 		
 	}
 
+	public void deleteCategory(CategoryVo categoryVo) {
+		sqlSession.delete("deleteCategory", categoryVo);
+		
+	}
+
 }

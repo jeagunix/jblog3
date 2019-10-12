@@ -6,11 +6,17 @@
 	<!-- 회원정보 입력 -->
 	<insert id="insert" parameterType="postvo">
 		<![CDATA[
-		insert
-		  into user
-		values ( #{id }, #{name }, #{password }, "USER", now())
+			insert
+			  into user
+			values ( #{id }, #{name }, #{password }, "USER", now())
 		]]>
 	</insert>
 	
-
+	<delete id="deletePostOfCategory" parameterType="Long">
+		<![CDATA[
+			delete 
+			  from post
+			 where category_no = #{value }
+		]]>
+	</delete>
 </mapper>

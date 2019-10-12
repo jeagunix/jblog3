@@ -54,17 +54,16 @@ $(function(){
 						        "<td>" + categoryInfoList[categoryInfo].postCount + "</td>"+
 						        "<td>" + categoryInfoList[categoryInfo].description + "</td>" +
 						        "<td>" +
-						        "<img src='${pageContext.servletContext.contextPath}/assets/images/delete.jpg' />" +
-					       	    "</td>" +
+						        "<img src='${pageContext.servletContext.contextPath}/assets/images/delete.jpg' class='delete' id=" +
+						        categoryInfoList[categoryInfo].no +
+						        " />" +
+						        "</td>" +
 					        "</tr>"		
 					);
 					countList--;
 				}
 				alert(input_name+"이 카테고리로 추가되었습니다.");
-		
-			
-				
-				
+
 			},
 			error: function(xhr, error){
 				console.log(err);
@@ -73,18 +72,39 @@ $(function(){
 		});
 	});
 	
-	$("td img").click(function(){
-		var categoryNo = $(this).attr('id');
-		
+	$(document).on('click', '.delete', function(){
+		var input_categoryNo = $(this).attr('id');
 		
 		// ajax 통신
 		$.ajax({
 			url: "${pageContext.servletContext.contextPath }/${authUser.id}/admin/categoryDelete",
 			type: "post",
-			data: {"categoryNo": categoryNo },
+			data: {no: input_categoryNo },
 			success: function(categoryInfoList){
-				alert("1");
-				alert(categoryNo);
+				$("#original_table").remove();
+				$("#ajax_table").remove();
+				
+				var countList = categoryInfoList.length;
+				var ajax_table = $("<tbody id='ajax_table'></tbody>");
+				$(".admin-cat").append(ajax_table);
+				
+				for(let categoryInfo in categoryInfoList){
+					ajax_table.append(
+							"<tr>" +
+						        "<td>" + countList + "</td>" +
+						        "<td>" + categoryInfoList[categoryInfo].name + "</td>" +
+						        "<td>" + categoryInfoList[categoryInfo].postCount + "</td>"+
+						        "<td>" + categoryInfoList[categoryInfo].description + "</td>" +
+						        "<td>" +
+						        "<img src='${pageContext.servletContext.contextPath}/assets/images/delete.jpg' class='delete' id=" +
+						        categoryInfoList[categoryInfo].no +
+						        " />" +
+						        "</td>" +
+					        "</tr>"		
+					);
+					countList--;
+				}
+				alert("카테고리가 삭제되었습니다.");
 			},
 			error: function(xhr, error){
 				console.log(err);
@@ -137,7 +157,7 @@ $(function(){
 									 ${categoryInfo.description }
 								</td>
 								<td>
-									<img src="${pageContext.servletContext.contextPath}/assets/images/delete.jpg" id="${categoryInfo.no}">
+									<img src="${pageContext.servletContext.contextPath}/assets/images/delete.jpg" id="${categoryInfo.no}" class="delete" />
 								</td>
 							</tr>
 						</c:forEach>

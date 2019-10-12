@@ -35,4 +35,9 @@ public class CategoryService {
 		
 	}
 
+	public void deleteCategory(CategoryVo categoryVo) {
+		categoryDao.deleteCategory(categoryVo);
+		
+	}
+
 }
